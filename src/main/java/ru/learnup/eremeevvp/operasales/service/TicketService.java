@@ -2,6 +2,9 @@ package ru.learnup.eremeevvp.operasales.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.learnup.eremeevvp.operasales.annotations.Notifierable;
+
+import java.util.Scanner;
 
 @Service
 public class TicketService {
@@ -13,7 +16,9 @@ public class TicketService {
         this.list = list;
     }
 
+    @Notifierable
     public String buyTicket(String title, String place) {
+        Scanner sc = new Scanner(System.in);
         for (Premier opera : list.playbill) {
             if (opera.getTitle().contains(title)) {
                 //TODO Добавить действие покупки билета
@@ -23,6 +28,7 @@ public class TicketService {
         return success;
     }
 
+    @Notifierable
     public String returnTicket(String title, String place) {
         for (Premier opera : list.playbill) {
             if (opera.getTitle().contains(title)) {
