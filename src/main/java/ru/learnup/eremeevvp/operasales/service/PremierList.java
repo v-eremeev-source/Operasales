@@ -1,16 +1,31 @@
 package ru.learnup.eremeevvp.operasales.service;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import ru.learnup.eremeevvp.operasales.dao.PremierDao;
 import ru.learnup.eremeevvp.operasales.entities.Premier;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
-public class PremierList {
+public class PremierList implements ApplicationContextAware {
+    private PremierDao premierDao;
     ArrayList<Premier> playbill = new ArrayList<>();
+    private ApplicationContext ctx;
+    PremierDao repo = (PremierDao) premierDao;
 
-    public void addPremier() {
+    public PremierList(PremierDao premierDao) {
+        this.premierDao = premierDao;
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+        this.ctx = ctx;
+    }
+    public Premier addPremier() {
         Premier newPremier = new Premier();
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите название:");
@@ -19,10 +34,10 @@ public class PremierList {
         newPremier.setDescription(sc.nextLine());
         System.out.println("Введите категорию:");
         newPremier.setCathegory(sc.nextLine());
-        System.out.println("Введите количество мест:");
-
         playbill.add(newPremier);
         System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
+        repo.addPremier(newPremier);
+        return newPremier;
     }
 
     public ArrayList<Premier> removePremier() {
@@ -33,6 +48,7 @@ public class PremierList {
         for (Premier opera : playbill) {
             if (opera.getTitle().contains(title)) {
                 playbill.remove(opera);
+                repo.delitePremierByTitle(title);
                 System.out.println("Опера удалена,текущая афиша:");
                 return playbill;
             }
@@ -40,17 +56,12 @@ public class PremierList {
         return null;
     }
 
-    public ArrayList<Premier> showAllPremier() {
+    public List<Premier> showAllPremier() {
         System.out.println("Список всех премьер:");
-        return playbill;
+        return repo.getAllPremiers();
     }
 
     public Premier showOnePremier(String title) {
-        for (Premier opera : playbill) {
-            if (opera.getTitle().contains(title)) {
-                return opera;
-            }
-        }
-        return null;
+        return repo.getPremierByTitle(title);
     }
 }
