@@ -1,6 +1,7 @@
 package ru.learnup.eremeevvp.operasales.service;
 
 import org.springframework.stereotype.Component;
+import ru.learnup.eremeevvp.operasales.entities.Premier;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ public class PremierList {
         System.out.println("Введите категорию:");
         newPremier.setCathegory(sc.nextLine());
         System.out.println("Введите количество мест:");
-        newPremier.setPlaces(sc.nextInt());
+
         playbill.add(newPremier);
         System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
     }

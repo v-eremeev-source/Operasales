@@ -3,6 +3,7 @@ package ru.learnup.eremeevvp.operasales.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.learnup.eremeevvp.operasales.annotations.Notifierable;
+import ru.learnup.eremeevvp.operasales.entities.Premier;
 
 import java.util.Scanner;
 
