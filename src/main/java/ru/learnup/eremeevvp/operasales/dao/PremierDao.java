@@ -45,4 +45,9 @@ public class PremierDao implements PremierDaoInterface {
 
         return premierRepository.removePremierByTitleContains(title);
     }
+    @Override
+    public Premier getPremierByTitle(String title){
+
+        return premierRepository.getPremierByTitleContains(title);
+    }
 }

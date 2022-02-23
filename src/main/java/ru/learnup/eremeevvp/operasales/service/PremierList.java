@@ -16,8 +16,6 @@ public class PremierList implements ApplicationContextAware {
     private PremierDao premierDao;
     ArrayList<Premier> playbill = new ArrayList<>();
     private ApplicationContext ctx;
-    PremierDao repo = (PremierDao) premierDao;
-
     public PremierList(PremierDao premierDao) {
         this.premierDao = premierDao;
     }
@@ -26,6 +24,7 @@ public class PremierList implements ApplicationContextAware {
         this.ctx = ctx;
     }
     public Premier addPremier() {
+        PremierDao repo = (PremierDao) premierDao;
         Premier newPremier = new Premier();
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите название:");
@@ -34,13 +33,16 @@ public class PremierList implements ApplicationContextAware {
         newPremier.setDescription(sc.nextLine());
         System.out.println("Введите категорию:");
         newPremier.setCathegory(sc.nextLine());
+        System.out.println("Введите места");
+        newPremier.setPlaces(sc.nextLine());
         playbill.add(newPremier);
-        System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
         repo.addPremier(newPremier);
+        System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
         return newPremier;
     }
 
     public ArrayList<Premier> removePremier() {
+        PremierDao repo = (PremierDao) premierDao;
         String title;
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите оперу,которую хотите удалить:");
@@ -57,11 +59,13 @@ public class PremierList implements ApplicationContextAware {
     }
 
     public List<Premier> showAllPremier() {
+        PremierDao repo = (PremierDao) premierDao;
         System.out.println("Список всех премьер:");
         return repo.getAllPremiers();
     }
 
     public Premier showOnePremier(String title) {
+        PremierDao repo = (PremierDao) premierDao;
         return repo.getPremierByTitle(title);
     }
 }
