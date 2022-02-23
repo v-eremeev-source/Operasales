@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -26,16 +25,10 @@ public class Premier {
     @Column
     protected String cathegory;
 
-    @OneToMany(mappedBy = "places", cascade = CascadeType.ALL)
-    @JoinColumn
-    protected List<Ticket> places;
+  @Column
+    protected String places;
 
-    public Premier(String title, String description, String cathegory, List<Ticket> places) {
-        this.title = title;
-        this.description = description;
-        this.cathegory = cathegory;
-        this.places = places;
-    }
+
 
     public Integer getId() {
         return id;
@@ -69,11 +62,11 @@ public class Premier {
         this.cathegory = cathegory;
     }
 
-    public List<Ticket> getPlaces() {
+    public String getPlaces() {
         return places;
     }
 
-    public void setPlaces(List<Ticket> places) {
+    public void setPlaces(String places) {
         this.places = places;
     }
 
