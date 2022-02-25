@@ -18,36 +18,12 @@ public class Ticket {
     private Integer id;
     @Column
     protected Integer price;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    protected Premier place;
+    @Column
+    protected String place;
 
     public Ticket() {
         this.price = price;
         this.place = place;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Premier getPlace() {
-        return place;
-    }
-
-    public void setPlace(Premier place) {
-        this.place = place;
-    }
 }
