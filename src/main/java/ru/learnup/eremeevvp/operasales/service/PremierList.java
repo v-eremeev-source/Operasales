@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import ru.learnup.eremeevvp.operasales.dao.PremierDao;
 import ru.learnup.eremeevvp.operasales.entities.Premier;
+import ru.learnup.eremeevvp.operasales.repositories.PremierRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,27 +36,44 @@ public class PremierList implements ApplicationContextAware {
         newPremier.setCathegory(sc.nextLine());
         System.out.println("Введите места");
         newPremier.setPlaces(sc.nextLine());
-        playbill.add(newPremier);
         repo.addPremier(newPremier);
         System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
         return newPremier;
     }
-
-    public ArrayList<Premier> removePremier() {
+    public Premier updatePremier() {
+        PremierDao repo = (PremierDao) premierDao;
+        Premier newPremier = new Premier();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите оперу,которую хотите обновить:");
+        String title = sc.nextLine();
+        Premier premierToUpdate = repo.getPremierByTitle(title);
+        System.out.println("Введите название:");
+        newPremier.setTitle(sc.nextLine());
+        System.out.println("Введите описание:");
+        newPremier.setDescription(sc.nextLine());
+        System.out.println("Введите категорию:");
+        newPremier.setCathegory(sc.nextLine());
+        System.out.println("Введите места");
+        newPremier.setPlaces(sc.nextLine());
+        premierToUpdate.setTitle(newPremier.getTitle());
+        premierToUpdate.setDescription(newPremier.getDescription());
+        premierToUpdate.setCathegory(newPremier.getCathegory());
+        premierToUpdate.setPlaces(newPremier.getPlaces());
+        repo.addPremier(premierToUpdate);
+        System.out.println("Премьера " + newPremier.getTitle() + " успешно обновлена");
+        return newPremier;
+    }
+    public List<Premier> removePremier() {
         PremierDao repo = (PremierDao) premierDao;
         String title;
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите оперу,которую хотите удалить:");
         title = sc.nextLine();
-        for (Premier opera : playbill) {
-            if (opera.getTitle().contains(title)) {
-                playbill.remove(opera);
-                repo.delitePremierByTitle(title);
-                System.out.println("Опера удалена,текущая афиша:");
-                return playbill;
-            }
-        }
-        return null;
+        Premier premier = repo.getPremierByTitle(title);
+        Long id = premier.getId();
+        repo.deletePremierById(id);
+        System.out.println("Опера " + title + " удалена,текущая афиша:");
+        return repo.getAllPremiers();
     }
 
     public List<Premier> showAllPremier() {

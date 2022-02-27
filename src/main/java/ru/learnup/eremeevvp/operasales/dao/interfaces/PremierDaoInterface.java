@@ -5,11 +5,10 @@ import ru.learnup.eremeevvp.operasales.entities.Premier;
 import java.util.List;
 
 public interface PremierDaoInterface {
-    Premier getPremierById(Integer id);
+    Premier getPremierById(Long id);
     List<Premier> getAllPremiers();
     Premier addPremier(Premier premier);
     Premier updatePremier(Premier premier);
-    boolean deletePremierById(Integer id);
-    Premier delitePremierByTitle(String title);
+    boolean deletePremierById(Long id);
     Premier getPremierByTitle(String title);
 }
