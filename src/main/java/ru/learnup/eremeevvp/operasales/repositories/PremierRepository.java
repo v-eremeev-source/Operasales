@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface PremierRepository extends JpaRepository<Premier, Long> {
     Premier getPremierByTitleContains(String title);
+    void deleteById(Long id);
+
+    Premier getById(Long id);
 }

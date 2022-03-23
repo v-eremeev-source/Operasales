@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
+
 
 @Getter
 @Setter
@@ -26,14 +27,14 @@ public class Premier {
     private  String cathegory;
 
   @Column(name = "places")
-  private  String places;
-
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    private Collection<Ticket> tickets;
 
 
 
 
     @Override
     public String toString() {
-        return "Название: " + title + " Описание: " + description + " Категория: " + cathegory + " Количество мест: " + places;
+        return "Название: " + title + " Описание: " + description + " Категория: " + cathegory + " Билеты: " + tickets;
     }
 }

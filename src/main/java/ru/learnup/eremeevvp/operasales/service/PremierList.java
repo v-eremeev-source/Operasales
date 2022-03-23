@@ -34,8 +34,6 @@ public class PremierList implements ApplicationContextAware {
         newPremier.setDescription(sc.nextLine());
         System.out.println("Введите категорию:");
         newPremier.setCathegory(sc.nextLine());
-        System.out.println("Введите места");
-        newPremier.setPlaces(sc.nextLine());
         repo.addPremier(newPremier);
         System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
         return newPremier;
@@ -53,12 +51,9 @@ public class PremierList implements ApplicationContextAware {
         newPremier.setDescription(sc.nextLine());
         System.out.println("Введите категорию:");
         newPremier.setCathegory(sc.nextLine());
-        System.out.println("Введите места");
-        newPremier.setPlaces(sc.nextLine());
         premierToUpdate.setTitle(newPremier.getTitle());
         premierToUpdate.setDescription(newPremier.getDescription());
         premierToUpdate.setCathegory(newPremier.getCathegory());
-        premierToUpdate.setPlaces(newPremier.getPlaces());
         repo.addPremier(premierToUpdate);
         System.out.println("Премьера " + newPremier.getTitle() + " успешно обновлена");
         return newPremier;
