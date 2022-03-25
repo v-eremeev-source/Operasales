@@ -3,11 +3,19 @@ package ru.learnup.eremeevvp.operasales.service;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.eremeevvp.operasales.dao.PremierDao;
 import ru.learnup.eremeevvp.operasales.entities.Premier;
 import ru.learnup.eremeevvp.operasales.repositories.PremierRepository;
 
+import javax.persistence.LockModeType;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,6 +32,13 @@ public class PremierList implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
         this.ctx = ctx;
     }
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            isolation = Isolation.DEFAULT,
+            timeout = 3,
+            rollbackFor = {EOFException.class, FileNotFoundException.class},
+            noRollbackFor = {IllegalArgumentException.class}
+    )
     public Premier addPremier() {
         PremierDao repo = (PremierDao) premierDao;
         Premier newPremier = new Premier();
@@ -38,6 +53,7 @@ public class PremierList implements ApplicationContextAware {
         System.out.println("Премьера " + newPremier.getTitle() + " успешно добавлена");
         return newPremier;
     }
+
     public Premier updatePremier() {
         PremierDao repo = (PremierDao) premierDao;
         Premier newPremier = new Premier();
@@ -70,15 +86,20 @@ public class PremierList implements ApplicationContextAware {
         System.out.println("Опера " + title + " удалена,текущая афиша:");
         return repo.getAllPremiers();
     }
-
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public List<Premier> showAllPremier() {
         PremierDao repo = (PremierDao) premierDao;
         System.out.println("Список всех премьер:");
         return repo.getAllPremiers();
     }
-
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public Premier showOnePremier(String title) {
         PremierDao repo = (PremierDao) premierDao;
-        return repo.getPremierByTitle(title);
+        try {
+            return repo.getPremierByTitle(title);
+        }catch (Exception exception){
+            System.out.println("Ошибка!" + exception.getMessage());
+        }
+        return null;
     }
 }

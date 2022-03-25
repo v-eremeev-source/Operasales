@@ -3,11 +3,12 @@ package ru.learnup.eremeevvp.operasales.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.Collection;
 
-
+@Proxy(lazy=false)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,7 +28,7 @@ public class Premier {
     private  String cathegory;
 
   @Column(name = "places")
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "premier", fetch = FetchType.EAGER)
     private Collection<Ticket> tickets;
 
 
