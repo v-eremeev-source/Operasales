@@ -1,13 +1,14 @@
 package ru.learnup.eremeevvp.operasales.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Proxy;
 
-
 import javax.persistence.*;
 
-@Proxy(lazy=false)
+@Proxy(lazy = false)
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
@@ -22,4 +23,15 @@ public class Ticket {
     @ManyToOne
     protected Premier premier;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
+
+
+
+

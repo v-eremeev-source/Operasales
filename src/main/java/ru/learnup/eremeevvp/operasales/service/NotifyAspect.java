@@ -15,7 +15,6 @@ public class NotifyAspect {
 
     @AfterReturning("sendLetter()")
     public void sendLetterAfterSuccess(JoinPoint point) {
-        //TODO Реализовать функционал отправки письма
         print("Письмо успешно отправлено");
     }
 
